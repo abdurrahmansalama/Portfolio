@@ -384,10 +384,14 @@ const chartObserver = new IntersectionObserver((entries) => {
             const circumference = 314; // 2 * PI * 50
             const offset = circumference - (percentage / 100) * circumference;
             
-            // Animate the circle
-            setTimeout(() => {
-                progressCircle.style.strokeDashoffset = offset;
-            }, 300);
+            // Set CSS custom property and trigger animation
+            container.style.setProperty('--chart-offset', offset);
+            progressCircle.style.setProperty('--chart-offset', offset);
+            
+            // Force animation restart
+            progressCircle.style.animation = 'none';
+            progressCircle.offsetHeight; // Trigger reflow
+            progressCircle.style.animation = 'chartFill 2s ease-in-out forwards';
         }
     });
 }, { threshold: 0.5 });

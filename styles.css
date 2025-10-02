@@ -1144,18 +1144,28 @@ body {
 
 .chart-bg {
     fill: none;
-    stroke: var(--gray-200);
+    stroke: #e5e7eb;
     stroke-width: 8;
 }
 
 .chart-progress {
     fill: none;
-    stroke: var(--primary);
+    stroke: #6366f1;
     stroke-width: 8;
     stroke-linecap: round;
     stroke-dasharray: 314;
     stroke-dashoffset: 314;
     transition: stroke-dashoffset 2s ease-in-out;
+    animation: chartFill 2s ease-in-out forwards;
+}
+
+@keyframes chartFill {
+    from {
+        stroke-dashoffset: 314;
+    }
+    to {
+        stroke-dashoffset: var(--chart-offset, 314);
+    }
 }
 
 .chart-content {
