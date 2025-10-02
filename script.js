@@ -330,6 +330,64 @@ root.setAttribute('data-theme', savedTheme);
 const icon = themeToggle.querySelector('i');
 icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 
+// Project filtering functionality
+const filterButtons = document.querySelectorAll('.filter-btn');
+const projectCards = document.querySelectorAll('.project-card');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        const filter = button.getAttribute('data-filter');
+        
+        projectCards.forEach(card => {
+            if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                card.style.display = 'block';
+                card.style.animation = 'fadeInUp 0.5s ease';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Skill bar animations
+const skillBars = document.querySelectorAll('.skill-bar');
+const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const skillBar = entry.target;
+            const width = skillBar.getAttribute('data-width');
+            skillBar.style.width = width + '%';
+        }
+    });
+}, { threshold: 0.5 });
+
+skillBars.forEach(bar => {
+    skillObserver.observe(bar);
+});
+
+// Circular chart animations
+const chartCircles = document.querySelectorAll('.chart-circle');
+const chartObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const circle = entry.target;
+            const percentage = circle.getAttribute('data-percentage');
+            const degrees = (percentage / 100) * 360;
+            
+            circle.style.background = `conic-gradient(var(--primary) ${degrees}deg, var(--gray-200) ${degrees}deg)`;
+        }
+    });
+}, { threshold: 0.5 });
+
+chartCircles.forEach(circle => {
+    chartObserver.observe(circle);
+});
+
 // Enhanced loading animation
 window.addEventListener('load', () => {
     document.body.style.opacity = '0';
@@ -352,6 +410,22 @@ window.addEventListener('load', () => {
         }, 200 + (index * 100));
     });
 });
+
+// Add CSS for fadeInUp animation
+const style = document.createElement('style');
+style.textContent += `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // Add scroll to top functionality
 const scrollToTopBtn = document.createElement('button');
