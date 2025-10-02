@@ -379,7 +379,13 @@ const chartObserver = new IntersectionObserver((entries) => {
             const percentage = circle.getAttribute('data-percentage');
             const degrees = (percentage / 100) * 360;
             
-            circle.style.background = `conic-gradient(var(--primary) ${degrees}deg, var(--gray-200) ${degrees}deg)`;
+            // Set CSS custom property for animation
+            circle.style.setProperty('--chart-percentage', `${degrees}deg`);
+            
+            // Animate the chart
+            setTimeout(() => {
+                circle.style.background = `conic-gradient(var(--primary) ${degrees}deg, var(--gray-200) ${degrees}deg)`;
+            }, 100);
         }
     });
 }, { threshold: 0.5 });
