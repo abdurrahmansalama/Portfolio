@@ -1127,37 +1127,44 @@ body {
     justify-content: center;
 }
 
-.chart-circle {
+.chart-container {
+    position: relative;
     width: 120px;
     height: 120px;
-    border-radius: 50%;
-    background: conic-gradient(var(--primary) 0deg, var(--gray-200) 0deg);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    transition: all 0.6s ease;
-    animation: chartFill 2s ease-in-out;
 }
 
-.chart-circle::before {
-    content: '';
+.chart-svg {
+    width: 120px;
+    height: 120px;
+    transform: rotate(-90deg);
+}
+
+.chart-bg {
+    fill: none;
+    stroke: var(--gray-200);
+    stroke-width: 8;
+}
+
+.chart-progress {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 314;
+    stroke-dashoffset: 314;
+    transition: stroke-dashoffset 2s ease-in-out;
+}
+
+.chart-content {
     position: absolute;
-    width: 80px;
-    height: 80px;
-    background: var(--white);
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.chart-inner {
-    position: relative;
-    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    z-index: 2;
 }
 
 .chart-number {
@@ -1175,15 +1182,6 @@ body {
     font-weight: 500;
     line-height: 1;
     text-align: center;
-}
-
-@keyframes chartFill {
-    0% {
-        background: conic-gradient(var(--primary) 0deg, var(--gray-200) 0deg);
-    }
-    100% {
-        background: conic-gradient(var(--primary) var(--chart-percentage, 0deg), var(--gray-200) var(--chart-percentage, 0deg));
-    }
 }
 
 .skills-grid {

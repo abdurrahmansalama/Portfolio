@@ -370,28 +370,30 @@ skillBars.forEach(bar => {
     skillObserver.observe(bar);
 });
 
-// Circular chart animations
-const chartCircles = document.querySelectorAll('.chart-circle');
+// SVG Circular chart animations
+const chartContainers = document.querySelectorAll('.chart-container');
 const chartObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            const circle = entry.target;
-            const percentage = circle.getAttribute('data-percentage');
-            const degrees = (percentage / 100) * 360;
+            const container = entry.target;
+            const progressCircle = container.querySelector('.chart-progress');
+            const chartNumber = container.querySelector('.chart-number');
+            const percentage = parseInt(chartNumber.textContent);
             
-            // Set CSS custom property for animation
-            circle.style.setProperty('--chart-percentage', `${degrees}deg`);
+            // Calculate the stroke-dashoffset for the percentage
+            const circumference = 314; // 2 * PI * 50
+            const offset = circumference - (percentage / 100) * circumference;
             
-            // Animate the chart
+            // Animate the circle
             setTimeout(() => {
-                circle.style.background = `conic-gradient(var(--primary) ${degrees}deg, var(--gray-200) ${degrees}deg)`;
-            }, 100);
+                progressCircle.style.strokeDashoffset = offset;
+            }, 300);
         }
     });
 }, { threshold: 0.5 });
 
-chartCircles.forEach(circle => {
-    chartObserver.observe(circle);
+chartContainers.forEach(container => {
+    chartObserver.observe(container);
 });
 
 // Enhanced loading animation
